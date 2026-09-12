@@ -1,7 +1,10 @@
-import React from "react";
-import { Link, usePage, router } from "@inertiajs/react";
-import { useState } from "react";
+import React, { useState, Fragment } from 'react';
+import { Link, usePage, router } from '@inertiajs/react';
+import { Dialog, Menu, Transition } from '@headlessui/react';
+import { X, Menu as MenuIcon } from 'lucide-react';
 import * as Icons from 'lucide-react';
+import { ThemeProvider } from '@/components/theme-provider';
+import { useTheme } from '@/components/theme-provider';
 import { motion } from 'framer-motion';
 
 // Styles d'animation pour le fond
@@ -45,7 +48,9 @@ if (typeof document !== 'undefined') {
 
 export default function Layout({ children }) {
     const { auth } = usePage().props;
-
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
     const currentRoute = usePage().url;
 
     // Fonction pour vérifier si un lien est actif
@@ -54,28 +59,26 @@ export default function Layout({ children }) {
     };
 
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-900 relative overflow-x-hidden">
+        <div className="min-h-screen bg-background text-foreground transition-colors duration-200 relative overflow-x-hidden">
             {/* Animation de fond */}
             <div className="bg-animated"></div>
             <div className="bg-pattern"></div>
             {/* Navigation */}
-            <nav className="fixed top-0 left-0 right-0 bg-gradient-to-r from-indigo-900/90 to-blue-900/90 backdrop-blur-sm border-b border-indigo-800/30 shadow-xl z-50">
+            <nav className="fixed backdrop-blur-sm top-0 left-0 right-0 bg-gradient-to-r from-indigo-900/50 to-blue-900/50 border-b border-indigo-800/30 shadow-xl z-50">
                 <div className="pt-safe">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
+                <div className="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between h-16 items-center">
                         <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link
-                                    href="/"
-                                    className="text-xl font-bold text-white hover:text-indigo-300 transition-colors flex items-center"
-                                >
-                                    <Icons.Home className="w-5 h-5 mr-2 text-indigo-400" />
-                                    MonApp
-                                </Link>
-                            </div>
-                            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                            <Link href="/" className="flex-shrink-0 flex items-center group">
+                            <Icons.Palette className="h-8 w-8 text-primary group-hover:rotate-12 transition-transform duration-300" />
+                            <span className="ml-2 text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                                ArtisanHub
+                            </span>
+                        </Link>
+                            <div className="hidden sm:ml-8 sm:flex sm:space-x-2">
                                 {auth ? (
                                     // Navigation pour utilisateur connecté
                                     <>
@@ -112,39 +115,83 @@ export default function Layout({ children }) {
                             </div>
                         </div>
                         {auth && (
-                            <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                                <button
-                                    onClick={() => {
-                                        setIsLoggingOut(true);
-                                        router.post(
-                                            "/logout",
-                                            {},
-                                            {
-                                                onFinish: () =>
-                                                    setIsLoggingOut(false),
-                                            }
-                                        );
-                                    }}
-                                    disabled={isLoggingOut}
-                                    type="button"
-                                    className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm ${
-                                        isLoggingOut
-                                            ? "bg-gray-600 text-gray-300 cursor-not-allowed"
-                                            : "bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    }`}
-                                >
-                                    {isLoggingOut ? (
-                                        <>
-                                            <Icons.Loader2 className="animate-spin -ml-1 mr-2 h-4 w-4" />
-                                            Déconnexion...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Icons.LogOut className="-ml-1 mr-2 h-4 w-4" />
-                                            Déconnexion
-                                        </>
-                                    )}
-                                </button>
+                            <div className="hidden sm:ml-4 sm:flex sm:items-center space-x-4">
+                                <ThemeProvider />
+                                <Menu as="div" className="relative">
+                                    <Menu.Button 
+                                        className="flex items-center space-x-2 focus:outline-none"
+                                        onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                                    >
+                                        <span className="sr-only">Ouvrir le menu utilisateur</span>
+                                        <div className="relative">
+                                            <Icons.User className="h-8 w-8 rounded-full bg-primary/10 text-primary p-1.5 transition-colors duration-200" />
+                                            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-background" />
+                                        </div>
+                                        <span className="hidden md:inline text-sm font-medium text-foreground">
+                                            {auth?.user?.name || 'Mon compte'}
+                                        </span>
+                                        <Icons.ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${profileMenuOpen ? 'rotate-180' : ''}`} />
+                                    </Menu.Button>
+                                    <Transition
+                                        show={profileMenuOpen}
+                                        as={Fragment}
+                                        enter="transition ease-out duration-100"
+                                        enterFrom="transform opacity-0 scale-95"
+                                        enterTo="transform opacity-100 scale-100"
+                                        leave="transition ease-in duration-75"
+                                        leaveFrom="transform opacity-100 scale-100"
+                                        leaveTo="transform opacity-0 scale-95"
+                                    >
+                                        <Menu.Items 
+                                            static
+                                            className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-card shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 border border-border/50 backdrop-blur-sm"
+                                        >
+                                            <div className="py-1">
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <Link
+                                                            href="/profile"
+                                                            className={`${active ? 'bg-accent text-foreground' : 'text-foreground'} block px-4 py-2 text-sm`}
+                                                        >
+                                                            <div className="flex items-center">
+                                                                <Icons.User className="mr-2 h-4 w-4" />
+                                                                Mon profil
+                                                            </div>
+                                                        </Link>
+                                                    )}
+                                                </Menu.Item>
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <Link
+                                                            href="/settings"
+                                                            className={`${active ? 'bg-accent text-foreground' : 'text-foreground'} block px-4 py-2 text-sm`}
+                                                        >
+                                                            <div className="flex items-center">
+                                                                <Icons.Settings className="mr-2 h-4 w-4" />
+                                                                Paramètres
+                                                            </div>
+                                                        </Link>
+                                                    )}
+                                                </Menu.Item>
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <Link
+                                                            href="/logout"
+                                                            method="post"
+                                                            as="button"
+                                                            className={`${active ? 'bg-accent text-foreground' : 'text-foreground'} w-full text-left block px-4 py-2 text-sm`}
+                                                        >
+                                                            <div className="flex items-center">
+                                                                <Icons.LogOut className="mr-2 h-4 w-4" />
+                                                                Déconnexion
+                                                            </div>
+                                                        </Link>
+                                                    )}
+                                                </Menu.Item>
+                                            </div>
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
                             </div>
                         )}
                     </div>
@@ -157,8 +204,10 @@ export default function Layout({ children }) {
                     {/* Contenu principal */}
                     <div className="py-10 px-4 sm:px-6 lg:px-8">
                         <div className="max-w-7xl mx-auto">
-                            <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl border border-gray-700/50 overflow-hidden">
-                                {children}
+                            <div className="relative">
+                                <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl border border-gray-700/50 overflow-hidden">
+                                    {children}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -167,9 +216,11 @@ export default function Layout({ children }) {
                 {/* Pied de page */}
                 <footer className="bg-gray-900/80 backdrop-blur-sm border-t border-gray-800 mt-10">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        <p className="text-center text-gray-400 text-sm">
-                            &copy; {new Date().getFullYear()} Mon Application. Tous droits réservés.
-                        </p>
+                        <nav className="bg-card/50 backdrop-blur-sm border-b border-border/50 sticky top-0 z-40">
+                            <p className="text-center text-gray-400 text-sm">
+                                &copy; {new Date().getFullYear()} Mon Application. Tous droits réservés.
+                            </p>
+                        </nav>
                     </div>
                 </footer>
             </div>
@@ -183,9 +234,9 @@ function NavLink({ href, active, children }) {
         <Link
             href={href}
             className={`${active 
-                ? 'border-indigo-400 text-white' 
-                : 'border-transparent text-gray-300 hover:border-gray-400 hover:text-white'
-            } inline-flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200`}
+                ? 'border-primary text-foreground bg-primary/10' 
+                : 'border-transparent text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+            } inline-flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200`}
         >
             {children}
         </Link>

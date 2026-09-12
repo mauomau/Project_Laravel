@@ -1,0 +1,24 @@
+// tsconfig.json (à la racine)
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOMIterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    
+    /* Pour React/JSX */
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+
+    /* Pour détecter les fichiers */
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx"], 
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

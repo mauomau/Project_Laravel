@@ -53,23 +53,23 @@ export default function Home() {
       initial="hidden"
       animate="show"
       variants={container}
-      className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 text-white"
+      className="min-h-screen bg-background text-foreground"
     >
       <Head title="Accueil" />
       
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative text-foreground overflow-hidden">
         <div className="max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div variants={fadeIn}>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-              <span className="block text-gray-200">Bienvenue sur</span>
-              <span className="block bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="block text-foreground">Bienvenue sur</span>
+              <span className="block bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
                 Mon Application
               </span>
             </h1>
             <motion.p 
               variants={fadeIn}
-              className="mt-4 max-w-2xl mx-auto text-lg text-gray-300 sm:text-xl md:mt-6"
+              className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground sm:text-xl md:mt-6"
             >
               Une expérience moderne et fluide avec Laravel, Inertia.js et React
             </motion.p>
@@ -79,13 +79,13 @@ export default function Home() {
             >
               <Link
                 href="/login"
-                className="px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 transition-all duration-200 transform hover:scale-105"
+                className="px-8 py-3 border border-transparent text-base font-medium rounded-lg text-primary-foreground bg-primary hover:bg-primary/90 md:py-4 md:text-lg md:px-10 transition-all duration-200 transform hover:scale-105"
               >
                 Se connecter
               </Link>
               <Link
                 href="/register"
-                className="px-8 py-3 border border-indigo-400 text-base font-medium rounded-lg text-indigo-100 bg-indigo-900/30 hover:bg-indigo-800/50 md:py-4 md:text-lg md:px-10 transition-all duration-200 transform hover:scale-105"
+                className="px-8 py-3 border border-primary/50 text-base font-medium rounded-lg text-primary-foreground/90 bg-primary/10 hover:bg-primary/20 md:py-4 md:text-lg md:px-10 transition-all duration-200 transform hover:scale-105"
               >
                 S'inscrire
               </Link>
@@ -105,19 +105,19 @@ export default function Home() {
       </div>
 
       {/* Features Section */}
-      <div className="py-20 bg-gradient-to-b from-blue-900/20 to-indigo-900/20">
+      <div className="py-20 bg-gradient-to-b from-background/50 via-background/30 to-background/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             variants={fadeIn}
             className="text-center"
           >
-            <span className="inline-block px-3 py-1 text-sm font-medium rounded-full bg-indigo-500/10 text-indigo-400">
+            <span className="inline-block px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary">
               Fonctionnalités
             </span>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Une expérience exceptionnelle
             </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-300">
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
               Découvrez ce qui rend notre application unique
             </p>
           </motion.div>
@@ -133,11 +133,11 @@ export default function Home() {
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-indigo-400/30 transition-all duration-300"
               >
-                <div className="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">{feature.name}</h3>
-                <p className="text-gray-300 text-sm">
+                <h3 className="text-lg font-semibold text-foreground mb-2">{feature.name}</h3>
+                <p className="text-muted-foreground text-sm">
                   {feature.description}
                 </p>
               </motion.div>
@@ -147,17 +147,17 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600">
+      <div className="bg-gradient-to-r from-primary to-purple-600">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
           <motion.div 
             variants={fadeIn}
             className="lg:w-2/3"
           >
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h2 className="text-3xl font-extrabold tracking-tight text-primary-foreground sm:text-4xl">
               <span className="block">Prêt à commencer ?</span>
-              <span className="block text-indigo-200">Créez votre compte dès maintenant.</span>
+              <span className="block text-primary-foreground/80">Créez votre compte dès maintenant.</span>
             </h2>
-            <p className="mt-3 text-lg text-indigo-100">
+            <p className="mt-3 text-lg text-primary-foreground/90">
               Rejoignez notre communauté et découvrez une nouvelle façon de gérer vos projets.
             </p>
           </motion.div>
@@ -167,7 +167,7 @@ export default function Home() {
           >
             <Link
               href="/register"
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-primary-foreground hover:bg-primary-foreground/90"
             >
               S'inscrire gratuitement
             </Link>

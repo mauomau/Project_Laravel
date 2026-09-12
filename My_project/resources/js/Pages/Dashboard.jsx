@@ -4,7 +4,6 @@ import Layout from '../Components/Layout';
 import { usePage } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import * as Icons from 'lucide-react';
-import { NotificationContext } from '../Components/Notification';
 import { useNotification } from '../Components/Notification';
 
 export default function Dashboard() {

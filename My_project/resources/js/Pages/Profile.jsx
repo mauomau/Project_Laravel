@@ -32,10 +32,6 @@ export default function Profile() {
     const { auth } = usePage().props;
     const user = auth;
 
-    console.log(auth);
-
-    console.log(user);
-
     return (
         <Layout>
             <motion.div 

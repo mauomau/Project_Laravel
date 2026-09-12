@@ -52,12 +52,12 @@ export default function Register() {
         initial="hidden"
         animate="show"
         variants={container}
-        className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8"
+        className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-background text-foreground"
       >
         <div className="w-full max-w-md">
           <motion.div variants={fadeIn} className="text-center">
             <div className="flex justify-center">
-              <Icons.UserPlus className="h-12 w-12 text-indigo-500" />
+              <Icons.UserPlus className="h-12 w-12 text-primary" />
             </div>
             <h2 className="mt-6 text-3xl font-extrabold text-white">
               Créer un compte

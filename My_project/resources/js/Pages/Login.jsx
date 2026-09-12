@@ -57,16 +57,16 @@ export default function Login() {
         <div className="w-full max-w-md">
           <motion.div variants={fadeIn} className="text-center">
             <div className="flex justify-center">
-              <Icons.Lock className="h-12 w-12 text-indigo-500" />
+              <Icons.Lock className="h-12 w-12 text-primary" />
             </div>
-            <h2 className="mt-6 text-3xl font-extrabold text-white">
+            <h2 className="mt-6 text-3xl font-extrabold text-foreground">
               Connexion à votre compte
             </h2>
-            <p className="mt-2 text-sm text-gray-300">
+            <p className="mt-2 text-sm text-muted-foreground">
               Ou{" "}
               <Link
                 href="/register"
-                className="font-medium text-indigo-400 hover:text-indigo-300"
+                className="font-medium text-primary hover:text-primary/80 transition-colors"
               >
                 créez un nouveau compte
               </Link>
@@ -81,13 +81,13 @@ export default function Login() {
             <motion.div variants={item}>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-300"
+                className="block text-sm font-medium text-foreground"
               >
                 Adresse email
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Icons.Mail className="h-5 w-5 text-gray-400" />
+                  <Icons.Mail className="h-5 w-5 text-muted-foreground" />
                 </div>
                 <input
                   id="email"
@@ -96,7 +96,7 @@ export default function Login() {
                   value={form.data.email}
                   onChange={(e) => form.setData("email", e.target.value)}
                   required
-                  className="bg-gray-800/50 border border-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent block w-full pl-10 sm:text-sm rounded-md p-3 transition-all duration-200"
+                  className="appearance-none relative block w-full px-3 py-2 border border-input bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-primary/50 sm:text-sm transition-colors"
                   placeholder="votre@email.com"
                 />
               </div>
@@ -110,18 +110,21 @@ export default function Login() {
 
             <motion.div variants={item}>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="password" className="block text-sm font-medium text-foreground">
                   Mot de passe
                 </label>
                 <div className="text-sm">
-                  <Link href="#" className="font-medium text-indigo-400 hover:text-indigo-300">
+                  <Link
+                    href="/forgot-password"
+                    className="font-medium text-primary hover:text-primary/80 transition-colors"
+                  >
                     Mot de passe oublié ?
                   </Link>
                 </div>
               </div>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Icons.Lock className="h-5 w-5 text-gray-400" />
+                  <Icons.Lock className="h-5 w-5 text-muted-foreground" />
                 </div>
                 <input
                   id="password"
@@ -130,7 +133,7 @@ export default function Login() {
                   value={form.data.password}
                   onChange={(e) => form.setData("password", e.target.value)}
                   required
-                  className="bg-gray-800/50 border border-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent block w-full pl-10 sm:text-sm rounded-md p-3 transition-all duration-200"
+                  className="appearance-none relative block w-full px-3 py-2 border border-input bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-primary/50 sm:text-sm transition-colors"
                   placeholder="••••••••"
                 />
               </div>
@@ -147,14 +150,11 @@ export default function Login() {
                 id="remember"
                 name="remember"
                 type="checkbox"
+                className="h-4 w-4 text-primary focus:ring-primary border-input rounded bg-background"
                 checked={form.data.remember}
-                onChange={(e) => form.setData("remember", e.target.checked)}
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-700 bg-gray-800 rounded"
+                onChange={(e) => form.setData('remember', e.target.checked)}
               />
-              <label
-                htmlFor="remember"
-                className="ml-2 block text-sm text-gray-300"
-              >
+              <label htmlFor="remember" className="ml-2 block text-sm text-foreground">
                 Se souvenir de moi
               </label>
             </motion.div>
@@ -163,8 +163,8 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={form.processing}
-                className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 ${
-                  form.processing ? "opacity-75 cursor-not-allowed" : ""
+                className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-primary-foreground bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-all duration-200 ${
+                  form.processing ? 'opacity-75' : ''
                 }`}
               >
                 {form.processing ? (
